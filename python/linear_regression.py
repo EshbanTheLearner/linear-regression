@@ -14,3 +14,9 @@ test_y = y[order[:split]]
 
 train_x = X[order[split:]]
 train_y = y[order[split:]]
+
+def gradient(w, x, y):
+    y_ = x.dot(w).flatten()
+    error = (y.flatten() - y_)
+    gradient = -(1.0/len(x)) * error.dot(x)
+    return gradient, np.pow(error, 2)
