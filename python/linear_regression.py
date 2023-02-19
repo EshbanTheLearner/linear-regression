@@ -15,8 +15,27 @@ test_y = y[order[:split]]
 train_x = X[order[split:]]
 train_y = y[order[split:]]
 
-def gradient(w, x, y):
+def get_gradient(w, x, y):
     y_ = x.dot(w).flatten()
     error = (y.flatten() - y_)
     gradient = -(1.0/len(x)) * error.dot(x)
     return gradient, np.pow(error, 2)
+
+W = np.random.randn(2)
+alpha = 0.5
+tolerence = 1e-5
+
+iterations = 1
+while True:
+    gradient, error = get_gradient(W, train_x, train_y)
+    W_ = W - alpha * gradient
+
+    if np.sum(abs(W_ - W)) < tolerence:
+        print("Converged!")
+        break
+
+    if iterations % 100 == 0:
+        print(f"Iteration: {iterations} \t| Error {error}")
+    
+    iterations += 1
+    W = W_
